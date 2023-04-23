@@ -132,6 +132,34 @@ exports.getCourses = (req, _res) => {
   courseReq.end();
 };
 
+exports.getCourseInfo = (req, _res) => {
+  const cv_cid = req.params.cv_cid;
+  const assessmentReq = https.request(
+    "https://www.mycourseville.com/api/v1/public/get/course/info?cv_cid=" +
+      cv_cid,
+    {
+      headers: {
+        Authorization: `Bearer ${req.session.token.access_token}`,
+      },
+    },
+    (res) => {
+      let data = "";
+      res.on("data", (chunk) => {
+        data += chunk;
+      });
+      res.on("end", () => {
+        const profile = JSON.parse(data);
+        _res.send(profile);
+        _res.end();
+      });
+    }
+  );
+  assessmentReq.on("error", (err) => {
+    console.error(err);
+  });
+  assessmentReq.end();
+};
+
 exports.getCourseAssignments = (req, _res) => {
   const cv_cid = req.params.cv_cid;
   const assessmentReq = https.request(
