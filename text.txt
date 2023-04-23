@@ -1,0 +1,30 @@
+// getCourseAssignments
+[
+    {
+ 	    course-title: ‘com eng’,
+	    course-id: 234fsdfl324sdfkj2535,
+	    assignments: [
+            {
+                "assignmentid: sfsaf2e2efj23fj
+                "itemid": 854813,
+                "title": "Setup GitHub Account",
+                "type": "assignment",
+                "status": 1,
+                "created": 1672728145,
+                "changed": 1673936079
+            },
+        ]
+    }
+]
+
+
+// getAssignment/:itemid
+{
+    "itemid": 854813,
+    "title": "Setup GitHub Account",
+    "instruction": "
+        1. If you already has a GitHub account, skip to step 3
+        2. Go to https://github.com then sign up a new GitHub account
+        3. Answer the question in the question set of this assignment. 
+    "
+}
