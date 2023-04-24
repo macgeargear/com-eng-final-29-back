@@ -9,6 +9,7 @@ const AppError = require("./utils/appError");
 const itemsRoutes = require("./routes/itemRoutes");
 const coursevilleRoutes = require("./routes/coursevilleRoutes");
 const assignmentRoutes = require("./routes/assignmentRoutes");
+const courseRoutes = require("./routes/courseRoutes");
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/items", itemsRoutes);
 app.use("/courseville", coursevilleRoutes);
 app.use("/assignment", assignmentRoutes);
+app.use("/course", courseRoutes);
 app.get("/", (req, res) => {
   res.send("Congratulation. This server is successfully run.");
 });
