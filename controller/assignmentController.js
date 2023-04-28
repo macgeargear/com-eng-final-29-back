@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const { v4: uuidv4 } = require("uuid");
-const { DynamoDBClient, QueryCommand } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient, QueryCommand, UpdateItemCommand } = require("@aws-sdk/client-dynamodb");
 const {
   PutCommand,
   DeleteCommand,
@@ -92,6 +92,30 @@ exports.addItem = async (req, res) => {
     console.error(err);
     res.status(500).send(err);
   }
+};
+
+exports.updateItem = async (req, res) => {
+  const assignmentCode = req.params.code;
+  const newStatus = req.params.status;
+  
+  console.log(assignmentCode, newStatus);
+  // console.log(`update on ${assignmentCode} with ${newValue.join(',')}`)
+  const params = {
+    TableName: process.env.aws_assignment_table_name,
+    Key: {'assignmentCode': {S: assignmentCode}},
+    UpdateExpression: 'SET #attr1 = :newStatus',
+    ExpressionAttributeNames: { '#attr1': 'status' },
+    ExpressionAttributeValues: {':newStatus': { S : newStatus}}
+  };
+
+  try {
+      const data = await docClient.send(new UpdateItemCommand(params));
+      console.log(data);
+      res.send({message: "update complete"});
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err);
+    }
 };
 
 // TODO #1.3: Delete an item from DynamDB
