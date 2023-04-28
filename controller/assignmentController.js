@@ -65,7 +65,6 @@ exports.getItemById = async (req, res) => {
     }else{
       res.send({...response[0], "message": "ok"});
     }
-    res.send();
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
@@ -76,9 +75,9 @@ exports.getItemById = async (req, res) => {
 exports.addItem = async (req, res) => {
   const item_id = uuidv4();
   const created_date = Date.now();
+  console.log('req.body: ', req.body);
   // const item = { item_id: item_id, ...req.body, created_date: created_date };
   const item = { ...req.body, created_date: created_date };
-
 
   const params = {
     TableName: process.env.aws_assignment_table_name,
