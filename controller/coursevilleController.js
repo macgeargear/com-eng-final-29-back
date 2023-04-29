@@ -136,7 +136,7 @@ exports.getCourseInfo = (req, _res) => {
   const cv_cid = req.params.cv_cid;
   const assessmentReq = https.request(
     "https://www.mycourseville.com/api/v1/public/get/course/info?cv_cid=" +
-      cv_cid,
+    cv_cid,
     {
       headers: {
         Authorization: `Bearer ${req.session.token.access_token}`,
@@ -164,7 +164,7 @@ exports.getCourseAssignments = (req, _res) => {
   const cv_cid = req.params.cv_cid;
   const assessmentReq = https.request(
     "https://www.mycourseville.com/api/v1/public/get/course/assignments?cv_cid=" +
-      cv_cid,
+    cv_cid,
     {
       headers: {
         Authorization: `Bearer ${req.session.token.access_token}`,
@@ -189,11 +189,32 @@ exports.getCourseAssignments = (req, _res) => {
 };
 
 // Outstanding #2
-exports.getAssignmentDetail = (req, res) => {
+exports.getAssignmentDetail = (req, _res) => {
   const itemid = req.params.item_id;
-  // You should change the response below.
-  res.send("This route should get assignment details based on item_id.");
-  res.end();
+  const assessmentReq = https.request(
+    "https://www.mycourseville.com/api/v1/public/get/item/assignment?item_id=" +
+    itemid,
+    {
+      headers: {
+        Authorization: `Bearer ${req.session.token.access_token}`,
+      },
+    },
+    (res) => {
+      let data = "";
+      res.on("data", (chunk) => {
+        data += chunk;
+      });
+      res.on("end", () => {
+        const profile = JSON.parse(data);
+        _res.send(profile);
+        _res.end();
+      });
+    }
+  );
+  assessmentReq.on("error", (err) => {
+    console.error(err);
+  });
+  assessmentReq.end();
 };
 
 exports.logout = (req, res) => {
