@@ -108,7 +108,7 @@ exports.getProfileInformation = (req, res) => {
 exports.getCourses = (req, _res) => {
   // You should change the response below.
   const courseReq = https.request(
-    "https://www.mycourseville.com/api/v1/public/get/user/courses",
+    "https://www.mycourseville.com/api/v1/public/get/user/courses?detail=1",
     {
       headers: {
         Authorization: `Bearer ${req.session.token.access_token}`,
@@ -136,7 +136,7 @@ exports.getCourseInfo = (req, _res) => {
   const cv_cid = req.params.cv_cid;
   const assessmentReq = https.request(
     "https://www.mycourseville.com/api/v1/public/get/course/info?cv_cid=" +
-    cv_cid,
+      cv_cid,
     {
       headers: {
         Authorization: `Bearer ${req.session.token.access_token}`,
@@ -164,7 +164,8 @@ exports.getCourseAssignments = (req, _res) => {
   const cv_cid = req.params.cv_cid;
   const assessmentReq = https.request(
     "https://www.mycourseville.com/api/v1/public/get/course/assignments?cv_cid=" +
-    cv_cid,
+      cv_cid +
+      "&detail=1",
     {
       headers: {
         Authorization: `Bearer ${req.session.token.access_token}`,
@@ -193,7 +194,7 @@ exports.getAssignmentDetail = (req, _res) => {
   const itemid = req.params.item_id;
   const assessmentReq = https.request(
     "https://www.mycourseville.com/api/v1/public/get/item/assignment?item_id=" +
-    itemid,
+      itemid,
     {
       headers: {
         Authorization: `Bearer ${req.session.token.access_token}`,
